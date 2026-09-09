@@ -1,0 +1,13 @@
+{
+  "id": "speedbw",
+  "name": "SpeedBW",
+  "shortName": "SpeedBW",
+  "version": "0.01",
+  "description": "Live speed-over-ground sourced from BlueWatch's phone-relayed GPS. The onboard GPS chip is never powered on, so there's no competing fix source.",
+  "type": "app",
+  "tags": "outdoors,gps",
+  "supports": ["BANGLEJS2"],
+  "storage": [
+    { "name": "speedbw.app.js", "url": "app.js" }
+  ]
+}
