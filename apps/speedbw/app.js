@@ -6,25 +6,32 @@
  * consumed here come exclusively from BlueWatch relaying the phone's GPS.
  */
 
+
 Bangle.loadWidgets();
 Bangle.drawWidgets();
-
 var Layout = require("Layout");
 
 var layout = new Layout({
   type: "v",
+  width: g.getWidth(),
+  height: g.getHeight() - 24, // leave room for widget bar
   c: [
     { type: "txt", font: "35%", label: "--", id: "speed", fillx: 1 },
-    { type: "txt", font: "20%", label: "", id: "unit" }
+    { type: "txt", font: "20%", label: "", id: "unit", fillx: 1 }
   ]
 }, { lazy: true });
-layout.render();
+
+function draw() {
+  g.clear();
+  Bangle.drawWidgets();
+  layout.render();
+}
 
 function showWaiting() {
   layout.speed.font = "20%";
-  layout.speed.label = "Waiting for\nphone GPS";
-  layout.unit.label = "";
-  layout.render();
+  layout.speed.label = "Waiting for";
+  layout.unit.label = "phone GPS";
+  draw();
 }
 
 function showSpeed(fix) {
@@ -32,24 +39,23 @@ function showSpeed(fix) {
   layout.speed.font = "35%";
   layout.speed.label = mph;
   layout.unit.label = "mph";
-  layout.render();
+  draw();
 }
 
 showWaiting();
 
-// Onboard GPS is intentionally left powered off - fixes only ever arrive
-// here via BlueWatch relaying the phone's GPS as standard 'GPS' events.
 Bangle.on('GPS', function (fix) {
-  if (fix.fix) {
-    showSpeed(fix);
-  } else {
-    showWaiting();
-  }
+  if (fix.fix) showSpeed(fix); else showWaiting();
 });
 
 Bangle.on('lcdPower', function (on) {
-  if (on) {
-    Bangle.drawWidgets();
-    layout.render();
-  }
+  if (on) draw();
 });
+
+
+
+
+
+
+
+
