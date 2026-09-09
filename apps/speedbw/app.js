@@ -7,6 +7,8 @@
  */
 
 
+
+
 Bangle.loadWidgets();
 Bangle.drawWidgets();
 var Layout = require("Layout");
@@ -51,6 +53,7 @@ Bangle.on('GPS', function (fix) {
 Bangle.on('lcdPower', function (on) {
   if (on) draw();
 });
+
 
 
 
